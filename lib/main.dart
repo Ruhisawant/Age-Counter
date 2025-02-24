@@ -53,6 +53,10 @@ class Counter with ChangeNotifier {
     value += 1;
     notifyListeners();
   }
+  void decrement() {
+    value -= 1;
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -63,7 +67,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -78,22 +81,38 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Demo Home Page'),
+        title: const Text(
+          'Age Counter',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
+        centerTitle: false,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('You have pushed the button this many times:'),
             // Consumer looks for an ancestor Provider widget
             // and retrieves its model (Counter, in this case).
             // Then it uses that model to build widgets, and will trigger
             // rebuilds if the model is updated.
             Consumer<Counter>(
               builder: (context, counter, child) => Text(
-                '${counter.value}',
+                'I am ${counter.value} years old.',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read<Counter>().increment();
+              }, 
+              child: const Text('Increment'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read<Counter>().decrement();
+              }, 
+              child: const Text('Decrement'),
             ),
           ],
         ),
