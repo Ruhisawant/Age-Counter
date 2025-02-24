@@ -88,53 +88,72 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Colors.blue,
         centerTitle: false,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Consumer looks for an ancestor Provider widget
-            // and retrieves its model (Counter, in this case).
-            // Then it uses that model to build widgets, and will trigger
-            // rebuilds if the model is updated.
-            Consumer<Counter>(
-              builder: (context, counter, child) => Text(
-                'I am ${counter.value} years old',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
+      body: Consumer<Counter>(
+        builder: (context, counter, child) {
+          // Change background color based on counter value
+          Color backgroundColor;
+          if (counter.value >= 0 && counter.value <= 12) {
+            backgroundColor = Colors.blueAccent;
+          } else if (counter.value >= 13 && counter.value <= 19) {
+            backgroundColor = Colors.greenAccent;
+          } else if (counter.value >= 20 && counter.value <= 30) {
+            backgroundColor = Colors.yellowAccent;
+          } else if (counter.value >= 31 && counter.value <= 50) {
+            backgroundColor = Colors.orangeAccent;
+          } else {
+            backgroundColor = Colors.grey;
+          }
 
-            const SizedBox(height: 30),
+          return Container(
+            color: backgroundColor,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Consumer looks for an ancestor Provider widget
+                  // and retrieves its model (Counter, in this case).
+                  // Then it uses that model to build widgets, and will trigger
+                  // rebuilds if the model is updated.
+                  Text(
+                      'I am ${counter.value} years old',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
 
-            // Increment button
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              onPressed: () {
-                context.read<Counter>().increment();
-              }, 
-              child: const Text('Increase Age', style: TextStyle(color: Colors.white)),
-            ),
+                  const SizedBox(height: 30),
 
-            // Decrement button
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
+                  // Increment button
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    onPressed: () {
+                      context.read<Counter>().increment();
+                    }, 
+                    child: const Text('Increase Age', style: TextStyle(color: Colors.white)),
+                  ),
+
+                  // Decrement button
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    onPressed: () {
+                      context.read<Counter>().decrement();
+                    }, 
+                    child: const Text('Reduce Age', style: TextStyle(color: Colors.white)),
+                  ),
+                ],
               ),
-              onPressed: () {
-                context.read<Counter>().decrement();
-              }, 
-              child: const Text('Reduce Age', style: TextStyle(color: Colors.white)),
-            ),
-          ],
-        ),
+            )
+          );
+        }, 
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
