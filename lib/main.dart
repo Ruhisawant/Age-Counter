@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+import 'dart:math';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,6 +91,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Consumer<Counter>(
         builder: (context, counter, child) {
+          double sliderValue = 0;
           Color backgroundColor;
           String message;
 
@@ -163,6 +165,37 @@ class MyHomePage extends StatelessWidget {
                       context.read<Counter>().decrement();
                     }, 
                     child: const Text('Reduce Age', style: TextStyle(color: Colors.white)),
+                  ),
+                  
+                  // Slider
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 300),
+                    child: Slider(
+                      value: counter.value.toDouble(),
+                      min: 0,
+                      max: 99,
+                      thumbColor: Colors.blue,
+                      onChanged: (value) {
+                        counter.value = value.toInt();
+                        counter.notifyListeners();
+                      },
+                    ),
+                  ),
+                  
+                  // Progress Bar
+                  const SizedBox(height: 20),
+                  Container(
+                    width: max(counter.value.toDouble(), 0),
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: counter.value <= 33 
+                          ? Colors.green 
+                          : counter.value <= 67 
+                              ? Colors.yellow 
+                              : Colors.red,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
                 ],
               ),
