@@ -170,7 +170,7 @@ class MyHomePage extends StatelessWidget {
                   // Slider
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 300),
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Slider(
                       value: counter.value.toDouble(),
                       min: 0,
