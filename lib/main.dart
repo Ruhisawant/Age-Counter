@@ -90,18 +90,25 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Consumer<Counter>(
         builder: (context, counter, child) {
-          // Change background color based on counter value
           Color backgroundColor;
+          String message;
+
+          // Change background color based on counter value
           if (counter.value >= 0 && counter.value <= 12) {
-            backgroundColor = Colors.blueAccent;
+            backgroundColor = const Color.fromARGB(255, 178, 203, 247);
+            message = 'You\'re a child!';
           } else if (counter.value >= 13 && counter.value <= 19) {
-            backgroundColor = Colors.greenAccent;
+            backgroundColor = const Color.fromARGB(255, 160, 255, 209);
+            message = 'Teenager Time!';
           } else if (counter.value >= 20 && counter.value <= 30) {
-            backgroundColor = Colors.yellowAccent;
+            backgroundColor = const Color.fromARGB(255, 255, 255, 147);
+            message = 'You\'re a young adult!';
           } else if (counter.value >= 31 && counter.value <= 50) {
-            backgroundColor = Colors.orangeAccent;
+            backgroundColor = const Color.fromARGB(255, 255, 207, 145);
+            message = 'You\'re an adult now!';
           } else {
             backgroundColor = Colors.grey;
+            message = 'Golden years!';
           }
 
           return Container(
@@ -114,6 +121,14 @@ class MyHomePage extends StatelessWidget {
                   // and retrieves its model (Counter, in this case).
                   // Then it uses that model to build widgets, and will trigger
                   // rebuilds if the model is updated.
+                  Text(
+                    message,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
                   Text(
                       'I am ${counter.value} years old',
                       style: Theme.of(context).textTheme.headlineMedium,
