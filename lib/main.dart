@@ -77,7 +77,6 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Consumer<Counter>(
         builder: (context, counter, child) {
-          double sliderValue = 0;
           Color backgroundColor;
           String message;
 
